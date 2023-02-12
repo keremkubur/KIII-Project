@@ -54,9 +54,8 @@ pipeline{
         stage('manual approval'){
                     steps{
                          script{
-                             timeout(10) {
                                   mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> READY FOR DEPLOYMENT <br> Please approve the deployment request: <br> URL: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "DEPLOYMENT APPROVAL: Project name -> ${env.JOB_NAME}", to: "keremkubur1@gmail.com";
-                                  input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'YES, APPROVE DEPLOY')
+                                  input message: 'APPROVE DEPLOYMENT ? ', ok: 'APPROVE'
                                   }
                              }
                          }
