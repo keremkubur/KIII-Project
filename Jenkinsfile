@@ -50,6 +50,18 @@ pipeline{
                         }
                     }
                 }
+        stage('connecting to k8s cluster'){
+                	steps{
+                	   script{
+                	    	withCredentials([kubeconfigFile(credentialsId: 'kubernetes-config', variable: 'KUBECONFIG')]) {
+                			  dir ("kubernetes/"){
+                				sh 'helm list'
+                				sh 'helm upgrade --install --set image.repository="nexus_ip:8083/springapp" --set image.tag="${VERSION}" myjavaapp myapp/ '
+                			  }
+                		      }
+                		    }
+                		  }
+                		}
     }
     post {
     		always {
