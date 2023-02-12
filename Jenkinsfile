@@ -27,6 +27,7 @@ pipeline{
                             withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_password')]) {
                                      sh '''
                                         docker build -t 34.125.34.44:8083/springapp:${VERSION} .
+                                        docker logout
                                         docker login -u admin -p $docker_password 34.125.34.44:8083
                                         docker push  34.125.34.44:8083/springapp:${VERSION}
                                         docker rmi 34.125.34.44:8083/springapp:${VERSION}
@@ -56,7 +57,7 @@ pipeline{
                 	    	withCredentials([kubeconfigFile(credentialsId: 'kubernetes-config', variable: 'KUBECONFIG')]) {
                 			  dir ("kubernetes/"){
                 				sh 'helm list'
-                				sh 'helm upgrade --install --set image.repository="34.125.34.44:8083/springapp" --set image.tag="0.2.0" myjavaapp myapp/ '
+                				sh 'helm upgrade --install --set image.repository="34.125.34.44:8083/springapp" --set image.tag="${VERSION}" myjavaapp myapp/ '
                 			  }
                 		      }
                 		    }
