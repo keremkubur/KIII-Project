@@ -6,5 +6,5 @@ RUN ./gradlew build
 
 FROM tomcat:9
 WORKDIR webapps
-COPY --from=base /app/build/libs/KIII-Project-0.0.1.war .
-RUN rm -rf ROOT && mv KIII-Project-0.0.1.war ROOT.war
+COPY --from=base /app/build/libs/KIII-Project-0.0.1-SNAPSHOT.war .
+RUN rm -rf ROOT && mv KIII-Project-0.0.1-SNAPSHOT.war ROOT.war
